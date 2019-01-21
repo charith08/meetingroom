@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
+  include SessionsHelper
   helper_method :current_user, :signed_in?, :is_admin?
 
   def current_user
@@ -15,5 +15,5 @@ class ApplicationController < ActionController::Base
     signed_in? ? current_user.admin : false
   end
 
-  include SessionsHelper
+
 end

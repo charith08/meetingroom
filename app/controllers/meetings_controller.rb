@@ -1,10 +1,11 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
+
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+  @meetings = Meeting.where(user_id:params[:user_id]).to_ary
   end
 
   # GET /meetings/1
@@ -25,21 +26,23 @@ class MeetingsController < ApplicationController
   # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
-
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
-        format.json { render :show, status: :created, location: @meeting }
-      else
-        format.html { render :new }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+             format.html { redirect_to @meeting, notice: 'meeting was successfully created.' }
+             format.json { render :show, status: :created, location: @meeting }
+           else
+             format.html { render :new }
+             format.json { render json: @meeting.errors, status: :unprocessable_entity }
+           end
+       end
+     end
+
+
 
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
+    @meeting.update(meeting_params)
     respond_to do |format|
       if @meeting.update(meeting_params)
         format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
@@ -69,6 +72,7 @@ class MeetingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:name, :start_time, :end_time, :user_id, :room_id)
+      params.require(:meeting).permit(:user_id, :room_id, :start_time, :end_time)
     end
+
 end

@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :meetings
+  resources :rooms
+  resources :users
 
+  resources :users do
+    resources :meetings
+  end
 
   get 'rooms/new'
   get 'password_resets/new'
@@ -13,14 +19,12 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  get 'createroom', to: 'rooms#new'
-  post 'createroom', to: 'rooms#create'
+  
   #get '/activate',   to: 'account_activations#activate'
-  resources :users
+
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :rooms
-  resources :meetings
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

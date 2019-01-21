@@ -19,6 +19,17 @@
 <% if is_admin? %>
   <div>
     <p class="heading"> Create a new Meeting Room </p>
-    
+
+</div>
+
+<div class="col-md-8">
+    <% if @user.meetings.any? %>
+      <h3>meetings (<%= @user.meetings.count %>)</h3>
+      <ol class="meetings">
+        <%= render @meetings %>
+      </ol>
+
+    <% end %>
+  </div>
 </div>
 <% end %>

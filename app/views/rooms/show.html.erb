@@ -3,9 +3,21 @@
 
 
 <div class="room">
-
+        <strong>Name:</strong>
         <%= @room.name %>
 
 </div>
 
-Show meetings here
+<p>
+  <strong>Location:</strong>
+  <%= @room.location %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @room.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %>

@@ -10,26 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_21_070055) do
+ActiveRecord::Schema.define(version: 2019_01_21_183127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "meetings", force: :cascade do |t|
-    t.string "name"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.bigint "user_id"
-    t.bigint "room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_meetings_on_room_id"
-    t.index ["user_id", "created_at"], name: "index_meetings_on_user_id_and_created_at"
-    t.index ["user_id"], name: "index_meetings_on_user_id"
+    t.integer "user_id"
+    t.integer "room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
+    t.string "location"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -50,6 +46,4 @@ ActiveRecord::Schema.define(version: 2019_01_21_070055) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "meetings", "rooms"
-  add_foreign_key "meetings", "users"
 end

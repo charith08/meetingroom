@@ -1,17 +1,20 @@
 class RoomsController < ApplicationController
-  before_action :logged_in_user, only: [:index, :destroy]
-  
+  before_action :set_room, only: [:show, :edit, :update, :destroy]
+
+
 
   def index
     @rooms = Room.all
   end
 
   def show
-    @room = Room.find(params[:id])
   end
 
   def new
     @room = Room.new
+  end
+
+  def edit
   end
 
   def create
@@ -26,23 +29,21 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    Room.find(params[:id]).destroy
+    @room.destroy
     flash[:success] = "Room deleted"
     redirect_to users_url
   end
 
   private
 
+  def set_room
+      @room = Room.find(params[:id])
+    end
+
     def room_params
-      params.require(:room).permit(:name)
+      params.require(:room).permit(:name, :location, :status)
     end
 
-    def logged_in_user
-      unless logged_in?
-        store_location
-       redirect_to login_url
 
-      end
-    end
 
 end

@@ -12,3 +12,11 @@ User.create!(name:  "Charith",
              admin: true,
              activated: true,
              activated_at: Time.zone.now)
+
+
+             User.create!(name:  "Charith2",
+                          email: "charith@commutatus.com",
+                          password:              "foobar",
+                          password_confirmation: "foobar",
+                          activated: true,
+                          activated_at: Time.zone.now)

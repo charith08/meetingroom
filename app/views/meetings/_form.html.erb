@@ -1,4 +1,4 @@
-<%= form_with(model: meeting, local: true) do |form| %>
+<%= form_with(model: @meeting, local: true) do |form| %>
   <% if meeting.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
@@ -11,10 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+  <% if logged_in? %>
+    <div class="form-group">
+      <%= form.label :user_id %>
+      <%= form.text_field :user_name, value: current_user.name, disabled:'disabled',class:"form-control" %>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :room_id %>
+      <%= collection_select(:meeting, :room_id, Room.where(status:"In Use").to_ary, :id, :name, {}, { class: "form-control" }) %>
+    </div>
 
   <div class="field">
     <%= form.label :start_time %>
@@ -26,17 +33,14 @@
     <%= form.datetime_select :end_time %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :room_id %>
-    <%= form.text_field :room_id %>
-  </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "book" %>
   </div>
+
+  <% else %>
+        <%= flash.now[:danger] = 'Please log in before make bookings' %>
+        <%= link_to "Log in", login_path %>
+<% end %>
+
 <% end %>

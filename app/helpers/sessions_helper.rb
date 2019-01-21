@@ -30,6 +30,18 @@ module SessionsHelper
   end
 
 
+  def current_room
+    if session[:room_id]
+      @current_room ||= Room.find_by(id: session[:room_id])
+    end
+  end
+
+
+
+
+
+
+
 
   def forget(user)
       user.forget
