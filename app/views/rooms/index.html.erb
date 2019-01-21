@@ -1,0 +1,14 @@
+<% provide(:title, 'All Rooms') %>
+<h1>All Rooms</h1>
+
+<ul class="users">
+  <% @rooms.each do |room| %>
+    <li>
+      <%= link_to room.name, room %>
+      <% if is_admin? %>
+      <%= link_to "delete", room, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+  <% end %>
+    </li>
+  <% end %>
+</ul>
